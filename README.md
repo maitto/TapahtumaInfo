@@ -1,4 +1,4 @@
-# my_app
+# TapahtumaInfo
 
 A new Flutter project.
 
