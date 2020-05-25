@@ -46,12 +46,12 @@ class MyApp extends StatelessWidget {
 }
 
 class EventsPageChild extends StatelessWidget {
-
+var context;
   @override
   Widget build(BuildContext context) {
-    final weatherBloc = BlocProvider.of<EventBloc>(context);
-    // Initiate getting the weather
-    weatherBloc.add(GetEvents());
+    this.context = context;
+    final bloc = BlocProvider.of<EventBloc>(context);
+    bloc.add(GetEvents());
     return Container(child:
     BlocListener<EventBloc, EventState>(
       //bloc: BlocProvider.of<EventBloc>(context),
@@ -68,7 +68,8 @@ class EventsPageChild extends StatelessWidget {
       //bloc: BlocProvider.of<EventBloc>(context),
       builder: (context, state) {
         if (state is EventsLoaded) {
-          return ListView.builder(
+          return RefreshIndicator(
+            child: ListView.builder(
             itemCount: state.events.length,
             itemBuilder: (context, index) {
               return Card(
@@ -184,7 +185,9 @@ class EventsPageChild extends StatelessWidget {
                 ),
               )
               );
-            });
+            }),
+            onRefresh: _testi,
+            );
         } else {
           return Container();
         }
@@ -194,4 +197,9 @@ class EventsPageChild extends StatelessWidget {
     )
     );
   }
+  Future<void> _testi() async {
+    final bloc = BlocProvider.of<EventBloc>(context);
+    bloc.add(GetEvents());
+  }
+
 }
