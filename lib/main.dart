@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/bloc/event_bloc.dart';
-import 'package:my_app/data/model/event.dart';
 import 'bloc/bloc.dart';
 
 void main() => runApp(MyApp());
@@ -32,7 +31,6 @@ class MyApp extends StatelessWidget {
  class EventsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print("asddd");
     return Scaffold(
       appBar: AppBar(
         title: Text("Events app"),
@@ -45,8 +43,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class EventsPageChild extends StatelessWidget {
+class EventsPageChild extends StatelessWidget { 
 var context;
+
   @override
   Widget build(BuildContext context) {
     this.context = context;
@@ -54,18 +53,16 @@ var context;
     bloc.add(GetEvents());
     return Container(child:
     BlocListener<EventBloc, EventState>(
-      //bloc: BlocProvider.of<EventBloc>(context),
       listener: (context, state) {
         if (state is EventInitial) {
-          print("asd initial");
+          print("EventInitial");
         } else if (state is EventsLoading) {
-          print("asd");
+          print("EventsLoading");
         } else if (state is EventsLoaded) {
-          print("asd");
+          print("EventsLoaded");
         }
       },
       child: BlocBuilder<EventBloc, EventState>(
-      //bloc: BlocProvider.of<EventBloc>(context),
       builder: (context, state) {
         if (state is EventsLoaded) {
           return RefreshIndicator(
@@ -186,7 +183,7 @@ var context;
               )
               );
             }),
-            onRefresh: _testi,
+            onRefresh: _getEvents,
             );
         } else {
           return Container();
@@ -197,7 +194,7 @@ var context;
     )
     );
   }
-  Future<void> _testi() async {
+  Future<void> _getEvents() async {
     final bloc = BlocProvider.of<EventBloc>(context);
     bloc.add(GetEvents());
   }
