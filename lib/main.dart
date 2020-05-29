@@ -90,10 +90,7 @@ var context;
                             child: Container(
                               width: 80,
                               height: 80,
-                              child: Image.asset(
-                                "lib/images/apina.png",
-                                fit: BoxFit.cover,
-                              ),
+                              child: Image.network(state.events[index].image),
                             ),
                           ),
                           Container(
@@ -108,7 +105,7 @@ var context;
                                         MediaQuery.of(context).size.width - 110,
                                     margin: EdgeInsets.only(bottom: 5),
                                     child: Text(
-                                      state.events[index].time,
+                                      state.events[index].getTime(),
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: Colors.black,
@@ -161,7 +158,7 @@ var context;
                                     width:
                                         MediaQuery.of(context).size.width - 110,
                                     child: Text(
-                                      state.events[index].tags,
+                                      state.events[index].getTags(),
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: Colors.blue,
